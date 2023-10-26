@@ -3,8 +3,8 @@ import { connect } from 'mongoose';
 
 dotenv.config();
 
-const username = encodeURIComponent(process.env.DB_USERNAME);
-const password = encodeURIComponent(process.env.DB_PASSWORD);
+const username = encodeURIComponent(process.env.DB_USERNAME as string);
+const password = encodeURIComponent(process.env.DB_PASSWORD as string);
 
 let db;
 
