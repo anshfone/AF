@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
 import { connect } from 'mongoose';
 
-const username = encodeURIComponent("anshTyagi");
-const password = encodeURIComponent("Ansh2222##");
+dotenv.config();
+
+const username = encodeURIComponent(process.env.DB_USERNAME);
+const password = encodeURIComponent(process.env.DB_PASSWORD);
 
 let db;
 
@@ -14,7 +17,7 @@ export default async function connectToDatabase() {
     await connect(`mongodb+srv://${username}:${password}@cluster0.dhuquz9.mongodb.net/DBR`);
     console.log('Connected to the database!');
   } catch (e) {
-    console.error('Connection failed!', e);
+    console.error('Connection failed', e);
     throw e;
   }
 }

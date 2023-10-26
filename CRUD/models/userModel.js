@@ -6,4 +6,4 @@ const userSchema = new Schema({
 })
 const Users = model('Users', userSchema,"Users");
 
-export { Users };
+export default Users
