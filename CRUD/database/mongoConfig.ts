@@ -3,16 +3,10 @@ import { connect } from 'mongoose';
 
 dotenv.config();
 
-const username = encodeURIComponent(process.env.DB_USERNAME as string);
-const password = encodeURIComponent(process.env.DB_PASSWORD as string);
+const username: string = encodeURIComponent(process.env.DB_USERNAME);
+const password: string = encodeURIComponent(process.env.DB_PASSWORD);
 
-let db;
-
-export default async function connectToDatabase() {
-  if (db) {
-    return db;
-  }
-
+export default async function connectToDatabase(): Promise<void> {
   try {
     await connect(`mongodb+srv://${username}:${password}@cluster0.dhuquz9.mongodb.net/DBR`);
     console.log('Connected to the database!');
