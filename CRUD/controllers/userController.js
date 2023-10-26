@@ -1,6 +1,17 @@
 import Users from "../models/userModel.js";
+import dotenv from 'dotenv';
+import jwt from "jsonwebtoken"
+dotenv.config();
 
 const UserController = {
+
+    async loginUser(req,res) {
+      const userData = req.body
+      const jwtSecretKey = process.env.JWT_SECRET_KEY
+      const expiresIn = '1m'
+      const token = jwt.sign(userData,jwtSecretKey,{expiresIn})
+      res.send(token)
+    },
     async getUsers(req,res) {
         try {
             const users = await Users.find({});
