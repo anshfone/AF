@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken"
+import * as argon2 from "argon2";
 import dotenv from 'dotenv';
+import Users from "../models/userModel.ts";
 dotenv.config();
 
 interface JwtToken {
@@ -8,21 +10,14 @@ interface JwtToken {
     email: string
 }
 
-const auth = (req: Request, res: Response, next: NextFunction): void => {
+const auth = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const encodedAuth: string | undefined = req.headers.authorization?.split(" ")[1];
         const jwtToken: string | undefined = req.headers.jwttoken as string;
-        if (encodedAuth === process.env.AUTH_KEY) {
-            next();
-        } else if (jwtToken) {
-            const tokenVerified: JwtToken = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY) as JwtToken;
-            console.log(tokenVerified)
-            req.body.email = tokenVerified.email
-            next();
-        } else {
-            res.status(401).send("Unauthorized");
-        }
-    } catch (e) {
+        const tokenVerified: JwtToken = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY) as JwtToken;
+        req.body.email = tokenVerified.email
+        next();
+    }
+     catch (e) {
         res.status(401).send("Unauthorized");
     }
 } 

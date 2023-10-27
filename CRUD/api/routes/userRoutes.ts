@@ -6,7 +6,7 @@ const userRouter: Router = Router()
 
 userRouter.get('/',auth,UserController.getUsers)
 userRouter.post('/signUp', UserController.signUpUser)
-userRouter.post('/login',auth,UserController.loginUser)
+userRouter.post('/login',UserController.loginUser)
 userRouter.patch('/edit',auth,UserController.editUser)
 userRouter.delete('/remove',auth,UserController.deleteUser)
 
