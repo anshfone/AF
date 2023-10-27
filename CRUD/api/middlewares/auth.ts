@@ -3,6 +3,11 @@ import jwt from "jsonwebtoken"
 import dotenv from 'dotenv';
 dotenv.config();
 
+interface JwtToken {
+    name: string,
+    email: string
+}
+
 const auth = (req: Request, res: Response, next: NextFunction): void => {
     try {
         const encodedAuth: string | undefined = req.headers.authorization?.split(" ")[1];
@@ -10,7 +15,9 @@ const auth = (req: Request, res: Response, next: NextFunction): void => {
         if (encodedAuth === process.env.AUTH_KEY) {
             next();
         } else if (jwtToken) {
-            const tokenVerified: string | object = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
+            const tokenVerified: JwtToken = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY) as JwtToken;
+            console.log(tokenVerified)
+            req.body.email = tokenVerified.email
             next();
         } else {
             res.status(401).send("Unauthorized");

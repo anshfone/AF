@@ -4,7 +4,7 @@
   "type": "module",
   "main": "app.ts",
   "scripts": {
-    "start": "nodemon ./CRUD/app.ts"
+    "start": "nodemon ./CRUD/api/app.ts"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
