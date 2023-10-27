@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken"
-import * as argon2 from "argon2";
 import dotenv from 'dotenv';
-import Users from "../models/userModel.ts";
 dotenv.config();
 
 interface JwtToken {
