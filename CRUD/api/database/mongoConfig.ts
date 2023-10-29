@@ -3,8 +3,8 @@ import { connect } from 'mongoose';
 
 dotenv.config();
 
-const username: string = encodeURIComponent(process.env.DB_USERNAME);
-const password: string = encodeURIComponent(process.env.DB_PASSWORD);
+const username: string | undefined = encodeURIComponent(process.env.DB_USERNAME);
+const password: string | undefined = encodeURIComponent(process.env.DB_PASSWORD);
 
 export default async function connectToDatabase(): Promise<void> {
   try {

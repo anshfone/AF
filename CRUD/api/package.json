@@ -4,11 +4,10 @@
   "type": "module",
   "main": "app.ts",
   "scripts": {
-    "start": "nodemon ./CRUD/api/app.ts"
+    "dev": "nodemon ./app.ts"
   },
   "dependencies": {
     "argon2": "^0.31.1",
-    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "esm": "^3.2.25",
@@ -24,6 +23,6 @@
     "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
     "@types/jsonwebtoken": "^9.0.4",
-    "@types/node": "^20.8.8"
+    "@types/node": "^20.8.9"
   }
 }
