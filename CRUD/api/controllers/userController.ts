@@ -26,7 +26,10 @@ const UserController = {
           }
         }
         else {
-          res.send("No User exists with this email.")
+          res.send({
+            status: 400,
+            message: "No User exists with this email."
+          })
         }
     },
     async getUsers(req: Request, res: Response): Promise<void> {

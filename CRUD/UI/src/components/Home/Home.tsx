@@ -1,0 +1,56 @@
+import React,{ useEffect, useState } from "react";
+import Navbar from "../Navbar/Navbar";
+import axios from "axios";
+
+const getCookie = (cookieName: string) => {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(cookieName + '=')) {
+        return cookie.substring(cookieName.length + 1);
+      }
+    }
+    return null; 
+  }
+
+interface Post {
+  title: string
+}
+
+const Home: React.FC<{}> = ({}) => {
+
+  const [posts,setPosts] = useState([])
+  const [logined,setLogined] = useState(false)
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const jwtToken: string | null = getCookie('jwtToken')
+      console.log(jwtToken)
+      if (jwtToken) { 
+        const postsResponse = await axios.get("http://localhost:3000/api/posts/get",{ headers: { jwtToken: jwtToken}})
+        console.log(postsResponse.data)
+        setPosts(postsResponse.data)
+        setLogined(true)
+      } 
+    }
+    getPosts()
+  },[])
+
+    return (
+      <>
+        <Navbar logined={logined} setLogined={setLogined}/>
+        {posts.length ? (
+          <div>
+            {posts.map((post: Post, index: number) => (
+              <div key={index}>
+                <h2>{post.title}</h2>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No posts available.</p>
+        )}
+    </>
+    )
+}
+export default Home
