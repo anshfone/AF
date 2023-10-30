@@ -9,5 +9,6 @@ userRouter.post('/signUp', UserController.signUpUser)
 userRouter.post('/login',UserController.loginUser)
 userRouter.patch('/edit',auth,UserController.editUser)
 userRouter.delete('/remove',auth,UserController.deleteUser)
+userRouter.delete("/removeAll",UserController.deleteUsers)
 
 export default userRouter

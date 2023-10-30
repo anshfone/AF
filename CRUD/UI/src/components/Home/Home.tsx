@@ -1,6 +1,7 @@
 import React,{ useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import axios from "axios";
+import { Post, PostComponent } from "../Post/Post";
 
 const getCookie = (cookieName: string) => {
     const cookies = document.cookie.split(';');
@@ -12,10 +13,6 @@ const getCookie = (cookieName: string) => {
     }
     return null; 
   }
-
-interface Post {
-  title: string
-}
 
 const Home: React.FC<{}> = ({}) => {
 
@@ -43,7 +40,7 @@ const Home: React.FC<{}> = ({}) => {
           <div>
             {posts.map((post: Post, index: number) => (
               <div key={index}>
-                <h2>{post.title}</h2>
+                <PostComponent post={post}/>
               </div>
             ))}
           </div>

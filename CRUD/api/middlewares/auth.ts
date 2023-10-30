@@ -12,7 +12,7 @@ const auth = async (req: Request, res: Response, next: NextFunction): Promise<vo
     try {
         const jwtToken: string | undefined = req.headers.jwttoken as string;
         const tokenVerified: JwtToken = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY) as JwtToken;
-        req.body.email = tokenVerified.email
+        req.body.creatorEmail = tokenVerified.email
         next();
     }
      catch (e) {

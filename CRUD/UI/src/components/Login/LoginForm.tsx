@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import { toast } from "react-toastify";
@@ -11,20 +11,20 @@ const LoginForm: React.FC<{}> = ({}) => {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: any): void => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: any): void => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.MouseEvent): Promise<void> => {
     e.preventDefault();
     const userData = { email: email, password: password };
     
     try {
-      const responseData = await axios.post('http://localhost:3000/api/users/login', userData);
+      const responseData: AxiosResponse<any,any> = await axios.post('http://localhost:3000/api/users/login', userData);
       console.log(responseData);
 
       if (responseData.data.status === 200) {

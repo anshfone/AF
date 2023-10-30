@@ -53,7 +53,7 @@ const UserController = {
             }
             else {
               const hashedPassword = await argon2.hash(userData.password)
-              const newUser = new Users({name: userData.name, email: userData.email, password: hashedPassword});
+              const newUser = new Users({username: userData.username, email: userData.email, password: hashedPassword});
               await newUser.save();
               res.send({
                 status: 200,
@@ -82,6 +82,10 @@ const UserController = {
         console.log(e);
         res.status(500).send({ error: 'Internal Server Error !' });
       }
+    },
+    async deleteUsers(req: Request, res: Response): Promise<void> {
+      await Users.deleteMany({})
+      res.send("Users Deleted")
     }
 }
 
