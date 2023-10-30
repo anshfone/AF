@@ -46,13 +46,19 @@ const UserController = {
             const userData = req.body 
             const user = await Users.findOne({email: userData.email})
             if (user) {
-              res.send("User Already exists with this email")
+              res.send({
+                status: 400,
+                message: "User Already exists with this email"
+              })
             }
             else {
               const hashedPassword = await argon2.hash(userData.password)
               const newUser = new Users({name: userData.name, email: userData.email, password: hashedPassword});
               await newUser.save();
-              res.status(200).send("Successfull Signup !! Redirect to Login");
+              res.send({
+                status: 200,
+                message: "Signup Successfull. Redirect to Login Page"
+              });
             }
         } catch (error) {
           console.log(error);

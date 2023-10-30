@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm: React.FC<{}> = ({}) => {
@@ -34,7 +34,7 @@ const LoginForm: React.FC<{}> = ({}) => {
       }
       else {
         setError(responseData.data.message)
-        toast.error(`${error}`, {
+        toast.error(`${responseData.data.message}`, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -58,7 +58,8 @@ const LoginForm: React.FC<{}> = ({}) => {
         <input type="email" id="email" name="email" value={email} onChange={handleEmailChange} />
         <label htmlFor="password">Password:</label>
         <input type="password" id="password" name="password" onChange={handlePasswordChange} />
-        <input type="submit" value="Submit" onClick={handleLogin} />
+        <button type="button" value="Submit" onClick={handleLogin} className= {`bg-blue-500 text-white py-2 px-4 rounded ${
+    !email || !password ? 'opacity-50 cursor-not-allowed' : ''}`}  disabled={!email || !password}>Submit</button>
       </form>
     </div>
   );

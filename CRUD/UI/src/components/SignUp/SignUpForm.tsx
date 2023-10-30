@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import "./SignUpForm.css";
 
 const SignUpForm: React.FC<{}> = ({}) => {
   let navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const validateEmail = (email: string): boolean => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (email.match(regex)) {
+      return true
+    }
+    return false
+  }
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -18,11 +28,36 @@ const SignUpForm: React.FC<{}> = ({}) => {
 
   const handleSignup = async (e) => {
     e.preventDefault()
+    if (!validateEmail(email)) {
+      toast.error(`Invalid Email`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+      return
+    }
     const userData = {email: email, password: password}
     const responseData = await axios.post('http://localhost:3000/api/users/signUp',userData)
     console.log(responseData)
-    if (responseData.status == 200) {
+    if (responseData.data.status == 200) {
       return navigate("/login")
+    }
+    else {
+      toast.error(`${responseData.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
   };
 
@@ -34,7 +69,8 @@ const SignUpForm: React.FC<{}> = ({}) => {
         <input type="text" id="email" name="email" value={email} onChange={handleEmailChange} />
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name="password" onChange={handlePasswordChange} />
-        <input type="submit" value="Submit" onClick={handleSignup} />
+        <button type="button" value="Submit" onClick={handleSignup} className= {`bg-blue-500 text-white py-2 px-4 rounded ${
+    !email || !password ? 'opacity-50 cursor-not-allowed' : ''}`}  disabled={!email || !password}>Submit</button>
       </form>
     </div>
   );

@@ -39,7 +39,7 @@ const Home: React.FC<{}> = ({}) => {
     return (
       <>
         <Navbar logined={logined} setLogined={setLogined}/>
-        {posts.length ? (
+        {posts.length && logined? (
           <div>
             {posts.map((post: Post, index: number) => (
               <div key={index}>
