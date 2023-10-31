@@ -1,6 +1,7 @@
 import React from "react"
 
 export interface Post {
+    creatorEmail: string,
     creator: string,
     title: string,
     content: string

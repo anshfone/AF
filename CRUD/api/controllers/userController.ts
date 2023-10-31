@@ -22,7 +22,10 @@ const UserController = {
             });
           }
           else{
-            res.send("Wrong Password")
+            res.send({
+              status: 401,
+              message: "Wrong Password! Please try again."
+            })
           }
         }
         else {
