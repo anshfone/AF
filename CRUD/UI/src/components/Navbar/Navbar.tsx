@@ -1,20 +1,31 @@
 import React from "react"
+import { NavigateFunction, useNavigate, NavLink } from "react-router-dom";
+
+type setLogined = React.Dispatch<React.SetStateAction<boolean>>
 
 interface NavBarProps {
     logined: boolean,
-    setLogined: React.Dispatch<React.SetStateAction<boolean>>;
+    setLogined: setLogined;
 }
 
 const deleteCookie = (name: string) => {
     document.cookie = name +`=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 }
 
-const handleLogout = (setLogined) => {
-    setLogined(false)
-    deleteCookie("jwtToken")
-}
-
 const NavBar: React.FC<NavBarProps> = ({ logined, setLogined}) => {
+
+    let navigate: NavigateFunction = useNavigate();
+
+    const handleLogout = (setLogined: setLogined): void => {
+        setLogined(false)
+        deleteCookie("jwtToken")
+    }
+    
+    // const handlePostCreation = () => {
+    //     console.log("whyyy")
+    //     return navigate("/createPost")
+    // }
+
     return (
         <>
             <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
@@ -34,6 +45,10 @@ const NavBar: React.FC<NavBarProps> = ({ logined, setLogined}) => {
                         <li>
                             <a href="#" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500 ml-80" aria-current="page">Home</a>
                         </li>
+                        {logined && <li>
+                            {/* <a href="/createPost" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Create Post</a> */}
+                            <NavLink to={`/createPost`} className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent`}>Create Post</NavLink>
+                        </li> }
                         {logined && <li>
                             <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" onClick={() => handleLogout(setLogined)}>Logout</a>
                         </li> }

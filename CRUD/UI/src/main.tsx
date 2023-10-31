@@ -8,6 +8,7 @@ import ErrorPage from './components/Error/ErrorPage.tsx';
 import LoginForm from './components/Login/LoginForm.tsx';
 import SignUpForm from './components/SignUp/SignUpForm.tsx';
 import { ToastContainer } from 'react-toastify';
+import CreatePost from './components/Post/createPost.tsx';
 
 
 const router = createBrowserRouter([
@@ -15,6 +16,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home/>,
     errorElement: <ErrorPage/>,
+    children: [
+      {
+        path: "createPost",
+        element: <CreatePost/>
+      }
+    ]
   },
   {
     path: "login",

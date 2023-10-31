@@ -16,7 +16,10 @@ const postController = {
             const user = await Users.findOne({email: req.body.creatorEmail})
             const newPost = new Posts({creator: user.username,...req.body})
             await newPost.save()
-            res.send("Post Created")
+            res.send({
+                status: 200,
+                message: "Post Created"
+            })
         } catch (e) {
             console.log(e)
         }

@@ -17,7 +17,7 @@ export const PostComponent: React.FC<PostProps> = ({ post }) => {
                 <h2 className="text-xl font-semibold text-gray-900">{post.title}</h2>
                 <span className="text-gray-600">Posted by: {post.creator}</span>
             </div>
-            <p className="mt-2 text-gray-800">{post.content}</p>
+            <p className="mt-2 text-gray-800 text-left">{post.content}</p>
         </div>
     )
 }
