@@ -15,13 +15,13 @@ const Home: React.FC<{}> = ({}) => {
       const jwtToken: string | null = getCookie('jwtToken')
       if (jwtToken) { 
         const postsResponse: AxiosResponse<any,any> = await axios.get("http://localhost:3000/api/posts/get",{ headers: { jwtToken: jwtToken}})
-        const posts: Post[] = postsResponse.data
-        setPosts(posts)
+        const postsData: Post[] = postsResponse.data
+        setPosts(postsData)
         setLogined(true)
       } 
     }
     getPosts()
-  },[getCookie('jwtToken')])
+  },[posts])
 
     return (
       <>

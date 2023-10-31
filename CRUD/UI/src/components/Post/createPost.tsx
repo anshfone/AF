@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { getCookie } from '../../utils/cookies';
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -11,11 +11,7 @@ const CreatePost: React.FC<{}> = () => {
   const [content, setContent] = useState('');
   let navigate: NavigateFunction = useNavigate();
 
-//   const openModal = () => {
-//     setIsOpen(true);
-//   };
-
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsOpen(false);
   };
 
@@ -28,10 +24,10 @@ const CreatePost: React.FC<{}> = () => {
     if (postCreationResponse.data.status == 200) {
         toast.success(`${postCreationResponse.data.message}`,{
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
             theme: "dark",
@@ -41,9 +37,10 @@ const CreatePost: React.FC<{}> = () => {
     closeModal();
   };
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     closeModal()
     navigate("/")
+    location.reload()
   }
 
   return (
@@ -58,14 +55,14 @@ const CreatePost: React.FC<{}> = () => {
               placeholder="Title"
               className="w-full p-2 mb-2 border rounded"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => setTitle(e.target.value)}
             />
             <textarea
               placeholder="Content"
               className="w-full p-2 mb-4 border rounded"
               rows={4}
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => setContent(e.target.value)}
             />
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"

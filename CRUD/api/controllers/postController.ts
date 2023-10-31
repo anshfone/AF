@@ -8,7 +8,7 @@ dotenv.config();
 const postController = {
     async getPosts(req: Request, res: Response): Promise<void> {
         const userData = req.body
-        const posts = await Posts.find({creatorEmail: userData.creatorEmail})
+        const posts = await Posts.find({creatorEmail: userData.creatorEmail}).sort({createdAt: -1})
         res.json(posts)
     },
     async createPost(req: Request, res: Response): Promise<void> {

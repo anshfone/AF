@@ -5,7 +5,9 @@ const postSchema = new Schema({
     creatorEmail: String,
     creator: String,  
     title: String,
-    content: String
+    content: String,
+}, {
+    timestamps: true
 })
 const Posts = model('Posts', postSchema,"Posts");
 
