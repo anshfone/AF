@@ -10,6 +10,7 @@ const Home: React.FC<{}> = ({}) => {
   const [posts,setPosts] = useState<Post[]>([])
   const [queryPosts,setQueryPosts] = useState<Post[]>([])
   const [logined,setLogined] = useState(false)
+  const [searchedString,setSearchedString] = useState("")
 
   useEffect(() => {
     const getPosts = async (): Promise<void> => {
@@ -26,8 +27,8 @@ const Home: React.FC<{}> = ({}) => {
 
     return (
       <>
-        <Navbar logined={logined} setLogined={setLogined} setQueryPosts={setQueryPosts}/>
-        {queryPosts.length && logined ? (
+        <Navbar logined={logined} searchedString={searchedString} setLogined={setLogined} setQueryPosts={setQueryPosts} setSearchedString={setSearchedString}/>
+        {searchedString.length && logined ? (
           <div>
             {queryPosts.map((post: Post, index: number) => (
               <div key={index}>

@@ -11,6 +11,7 @@
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "escape-string-regexp": "^5.0.0",
     "esm": "^3.2.25",
     "express": "^4.18.2",
     "gpg": "^0.6.0",

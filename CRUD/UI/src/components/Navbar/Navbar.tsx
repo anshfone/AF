@@ -7,20 +7,21 @@ import { Post } from "../Post/Post";
 
 type setLogined = React.Dispatch<React.SetStateAction<boolean>>
 type setPosts =  React.Dispatch<React.SetStateAction<Post[]>>
-
+type setSearchedString = React.Dispatch<React.SetStateAction<string>>
 interface NavBarProps {
     logined: boolean,
-    setLogined: setLogined;
-    setQueryPosts: setPosts
+    searchedString: string,
+    setLogined: setLogined,
+    setQueryPosts: setPosts,
+    setSearchedString: setSearchedString
 }
 
 const deleteCookie = (name: string) => {
     document.cookie = name +`=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ logined, setLogined, setQueryPosts }) => {
+const NavBar: React.FC<NavBarProps> = ({ logined, searchedString, setLogined, setQueryPosts, setSearchedString }) => {
 
-    const [searchedString,setSearchedString] = useState("")
     let navigate: NavigateFunction = useNavigate();
 
     const handleLogout = (setLogined: setLogined): void => {
@@ -30,7 +31,6 @@ const NavBar: React.FC<NavBarProps> = ({ logined, setLogined, setQueryPosts }) =
     }
 
     useEffect(() => {
-      console.log(searchedString)
       const searchPosts = async (searchedString: string) => {
         const jwtToken: string | null = getCookie('jwtToken')
         const searchData = {toBeSearched: searchedString}

@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import jwt from "jsonwebtoken"
+import escapeStringRegexp from 'escape-string-regexp';
 import { Request,Response } from "express";
 import Posts from '../models/postModel.ts';
 import Users from '../models/userModel.ts';
@@ -26,7 +26,26 @@ const postController = {
     },
     async searchPosts(req: Request, res: Response): Promise<void> {
         const {toBeSearched} = req.body
-        const searchedPosts = await Posts.find({title: toBeSearched})
+        const escapedToBeSearched = escapeStringRegexp(toBeSearched);
+        const pipeline = [
+            {
+                $match: {
+                    $or: [
+                        { title: { $regex: escapedToBeSearched, $options: 'i' } },
+                        { content: { $regex: escapedToBeSearched, $options: 'i' } }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    title: 1,
+                    content: 1,
+                    creator: 1,
+                }
+            },
+        ];
+        const searchedPosts = await Posts.aggregate(pipeline).exec();
         res.send({
             status: 200,
             data: searchedPosts
@@ -37,5 +56,4 @@ const postController = {
         res.send("Posts Deleted")
     }
 }
-
 export default postController

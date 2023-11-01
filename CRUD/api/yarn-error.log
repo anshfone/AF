@@ -1,29 +1,29 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\ansh.tyagi\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/gpg
+  C:\Program Files\nodejs\node.exe C:\Users\Dell\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add excape-string-regexp
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Users\ansh.tyagi\AppData\Local\Microsoft\WindowsApps;C:\Users\ansh.tyagi\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ansh.tyagi\AppData\Local\Programs\Git\cmd;C:\Users\ansh.tyagi\AppData\Roaming\npm
+  default;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git LFS;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\Program Files\heroku\bin;C:\Users\Dell\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Dell\AppData\Local\GitHubDesktop\bin;C:\Users\Dell\AppData\Roaming\npm;C:\tools\dart-sdk\bin;C:\Users\Dell\AppData\Roaming\Pub\Cache\bin;C:\Python310\Lib\site-packages\django\contrib\sites;C:\Users\Dell\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Dell\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts;C:\Program Files\Cloudflare\Cloudflare WARP\;C:\Users\Dell\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\Dell\AppData\Local\Programs\Python\Python312\;C:\Users\Dell\AppData\Local\Programs\Python\Launcher\;C:\Users\Dell\.console-ninja\.bin;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\Program Files\heroku\bin;C:\Users\Dell\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Dell\AppData\Roaming\npm;C:\tools\dart-sdk\bin;C:\Users\Dell\AppData\Roaming\Pub\Cache\bin;C:\Python310\Lib\site-packages\django\contrib\sites;C:\Users\Dell\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Redis
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  18.18.2
+  18.17.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fgpg: Not found
-      at params.callback [as _callback] (C:\Users\ansh.tyagi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
-      at self.callback (C:\Users\ansh.tyagi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
-      at Request.emit (node:events:517:28)
-      at Request.<anonymous> (C:\Users\ansh.tyagi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
-      at Request.emit (node:events:517:28)
-      at IncomingMessage.<anonymous> (C:\Users\ansh.tyagi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
-      at Object.onceWrapper (node:events:631:28)
-      at IncomingMessage.emit (node:events:529:35)
-      at endReadableNT (node:internal/streams/readable:1368:12)
+  Error: https://registry.yarnpkg.com/excape-string-regexp: Not found
+      at params.callback [as _callback] (C:\Users\Dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
+      at self.callback (C:\Users\Dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
+      at Request.emit (node:events:514:28)
+      at Request.<anonymous> (C:\Users\Dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
+      at Request.emit (node:events:514:28)
+      at IncomingMessage.<anonymous> (C:\Users\Dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
+      at Object.onceWrapper (node:events:628:28)
+      at IncomingMessage.emit (node:events:526:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
       at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
@@ -37,6 +37,7 @@ npm manifest:
     },
     "dependencies": {
       "argon2": "^0.31.1",
+      "child_process": "^1.0.2",
       "cors": "^2.8.5",
       "dotenv": "^16.3.1",
       "esm": "^3.2.25",
@@ -44,6 +45,7 @@ npm manifest:
       "gpg": "^0.6.0",
       "gpg-ts": "^0.7.0",
       "jsonwebtoken": "^9.0.2",
+      "kafkajs": "^2.2.4",
       "mongodb": "^6.2.0",
       "mongoose": "^7.6.3",
       "nodemon": "^3.0.1",
@@ -395,6 +397,11 @@ Lockfile:
       function-bind "^1.1.2"
       get-intrinsic "^1.2.1"
       set-function-length "^1.1.1"
+  
+  child_process@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/child_process/-/child_process-1.0.2.tgz#b1f7e7fc73d25e7fd1d455adc94e143830182b5a"
+    integrity sha512-Wmza/JzL0SiWz7kl6MhIKT5ceIlnFPJX+lwUGj7Clhy5MMldsSoJR0+uvRzOS5Kv45Mq7t1PoE8TsOA9bzvb6g==
   
   chokidar@^3.5.2:
     version "3.5.3"
@@ -864,6 +871,11 @@ Lockfile:
     dependencies:
       jwa "^1.4.1"
       safe-buffer "^5.0.1"
+  
+  kafkajs@^2.2.4:
+    version "2.2.4"
+    resolved "https://registry.yarnpkg.com/kafkajs/-/kafkajs-2.2.4.tgz#59e6e16459d87fdf8b64be73970ed5aa42370a5b"
+    integrity sha512-j/YeapB1vfPT2iOIUn/vxdyKEuhuY2PxMBvf5JWux6iSaukAccrMtXEY/Lb7OvavDhOWME589bpLrEdnVHjfjA==
   
   kareem@2.5.1:
     version "2.5.1"
