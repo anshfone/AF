@@ -24,6 +24,14 @@ const postController = {
             console.log(e)
         }
     },
+    async searchPosts(req: Request, res: Response): Promise<void> {
+        const {toBeSearched} = req.body
+        const searchedPosts = await Posts.find({title: toBeSearched})
+        res.send({
+            status: 200,
+            data: searchedPosts
+        })
+    },
     async deletePost(req: Request, res: Response): Promise<void> {
         await Posts.deleteMany({})
         res.send("Posts Deleted")

@@ -20,7 +20,6 @@ const CreatePost: React.FC<{}> = () => {
     const jwtToken: string | null = getCookie('jwtToken')
     const postData = {title: title, content: content}
     const postCreationResponse: AxiosResponse<any,any> = await axios.post("http://localhost:3000/api/posts/create",postData,{headers: {jwtToken: jwtToken}})
-    console.log(postCreationResponse)
     if (postCreationResponse.data.status == 200) {
         toast.success(`${postCreationResponse.data.message}`,{
             position: "top-center",
@@ -53,13 +52,13 @@ const CreatePost: React.FC<{}> = () => {
             <input
               type="text"
               placeholder="Title"
-              className="w-full p-2 mb-2 border rounded"
+              className="w-full p-2 mb-2 border rounded dark:text-black"
               value={title}
               onChange={(e: ChangeEvent<HTMLInputElement>): void => setTitle(e.target.value)}
             />
             <textarea
               placeholder="Content"
-              className="w-full p-2 mb-4 border rounded"
+              className="w-full p-2 mb-4 border rounded dark:text-black"
               rows={4}
               value={content}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => setContent(e.target.value)}

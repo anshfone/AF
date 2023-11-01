@@ -8,6 +8,7 @@ import { getCookie } from "../../utils/cookies";
 const Home: React.FC<{}> = ({}) => {
 
   const [posts,setPosts] = useState<Post[]>([])
+  const [queryPosts,setQueryPosts] = useState<Post[]>([])
   const [logined,setLogined] = useState(false)
 
   useEffect(() => {
@@ -25,8 +26,16 @@ const Home: React.FC<{}> = ({}) => {
 
     return (
       <>
-        <Navbar logined={logined} setLogined={setLogined}/>
-        {posts.length && logined? (
+        <Navbar logined={logined} setLogined={setLogined} setQueryPosts={setQueryPosts}/>
+        {queryPosts.length && logined ? (
+          <div>
+            {queryPosts.map((post: Post, index: number) => (
+              <div key={index}>
+                <PostComponent post={post}/>
+              </div>
+            ))}
+          </div>
+        ) : posts.length && logined ? (
           <div>
             {posts.map((post: Post, index: number) => (
               <div key={index}>
@@ -34,9 +43,7 @@ const Home: React.FC<{}> = ({}) => {
               </div>
             ))}
           </div>
-        ) : (
-          <p>No posts available.</p>
-        )}
+        ): <p>No Posts Available</p>}
         <Outlet/>
     </>
     )
