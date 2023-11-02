@@ -3,6 +3,9 @@ import escapeStringRegexp from 'escape-string-regexp';
 import { Request,Response } from "express";
 import Posts from '../models/postModel.ts';
 import Users from '../models/userModel.ts';
+import { Post } from '../interfaces/PostInterface.ts';
+import { bucket } from "../app.ts";
+import { Readable } from 'stream';
 dotenv.config();
 
 const postController = {
@@ -14,8 +17,10 @@ const postController = {
     async createPost(req: Request, res: Response): Promise<void> {
         try{
             const user = await Users.findOne({email: req.body.creatorEmail})
-            const newPost = new Posts({creator: user.username,...req.body})
-            await newPost.save()
+            console.log(req)
+            // const newPost = new Posts({creator: user.username,...req.body})
+            
+            // await newPost.save()
             res.send({
                 status: 200,
                 message: "Post Created"
@@ -45,7 +50,7 @@ const postController = {
                 }
             },
         ];
-        const searchedPosts = await Posts.aggregate(pipeline).exec();
+        const searchedPosts: Post[] = await Posts.aggregate(pipeline).exec();
         res.send({
             status: 200,
             data: searchedPosts

@@ -9,6 +9,7 @@ const CreatePost: React.FC<{}> = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [image, setImage] = useState<File | null>(null);
   let navigate: NavigateFunction = useNavigate();
 
   const closeModal = (): void => {
@@ -16,10 +17,14 @@ const CreatePost: React.FC<{}> = () => {
   };
 
   const createPost = async (): Promise<void> => {
-    console.log(title,content)
+    const formData: any = new FormData()
+    console.log(title,content,image)
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('image', image);
     const jwtToken: string | null = getCookie('jwtToken')
-    const postData = {title: title, content: content}
-    const postCreationResponse: AxiosResponse<any,any> = await axios.post("http://localhost:3000/api/posts/create",postData,{headers: {jwtToken: jwtToken}})
+    const postData = {title: title, content: content, image: image}
+    const postCreationResponse: AxiosResponse<any,any> = await axios.post("http://localhost:3000/api/posts/create",formData,{headers: {jwtToken: jwtToken, 'Content-Type': 'multipart/form-data'}})
     if (postCreationResponse.data.status == 200) {
         toast.success(`${postCreationResponse.data.message}`,{
             position: "top-center",
@@ -42,6 +47,12 @@ const CreatePost: React.FC<{}> = () => {
     location.reload()
   }
 
+  const handleImageUpload = (files: FileList | null): void => {
+    if (files && files.length > 0) {
+      setImage(files[0]);
+    }
+  };
+
   return (
     <div>
       {isOpen && (
@@ -62,6 +73,12 @@ const CreatePost: React.FC<{}> = () => {
               rows={4}
               value={content}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => setContent(e.target.value)}
+            />
+            <input
+              type="file"
+              accept="image/*" 
+              className="w-full p-2 mb-4 border rounded dark:text-black"
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => handleImageUpload(e.target.files)}
             />
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"

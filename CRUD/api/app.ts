@@ -7,9 +7,9 @@ import cors from 'cors'
 const app: Application = express();
 const port: number = 3000;
 
-function main(): void {
+async function main(): Promise<any> {
   try {
-    connectToDatabase();
+    const bucket = await connectToDatabase();
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });
@@ -17,8 +17,10 @@ function main(): void {
     app.use(json());
     app.use('/api/users', userRouter);
     app.use('/api/posts/',postRouter)
+    return {bucket}
   } catch (error) {
     console.log(error);
   }
 }
-main();
+const { bucket } = await main();
+export { bucket }

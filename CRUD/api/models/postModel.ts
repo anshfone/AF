@@ -6,6 +6,7 @@ const postSchema = new Schema({
     creator: String,  
     title: String,
     content: String,
+    image: Buffer
 }, {
     timestamps: true
 })
