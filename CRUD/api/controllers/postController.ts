@@ -34,7 +34,7 @@ const postController = {
     async createPost(req: Request, res: Response): Promise<void> {
         try{
             const user: any = await Users.findOne({email: req.body.creatorEmail})
-            const newPost: any = new Posts({creator: user.username,...req.body,imageId: req.file.id}) 
+            const newPost: any = new Posts({creator: user.username,...req.body,imageId: req.file?.id}) 
             await newPost.save()
             res.send({
                 status: 200,
@@ -62,6 +62,7 @@ const postController = {
                     title: 1,
                     content: 1,
                     creator: 1,
+                    imageId: 1,
                 }
             },
         ];
