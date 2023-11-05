@@ -9,7 +9,7 @@ const UserController = {
 
     async loginUser(req: Request, res: Response): Promise<void> {
       const userData = req.body
-        const user = await Users.findOne({email: userData.email})
+        const user: any = await Users.findOne({email: userData.email})
         if (user) {
           const passwordVerified = await argon2.verify(user.password,userData.password)
           if (passwordVerified) {
@@ -47,7 +47,7 @@ const UserController = {
     async signUpUser(req: Request, res: Response): Promise<void> {
         try {
             const userData = req.body 
-            const user = await Users.findOne({email: userData.email})
+            const user: any = await Users.findOne({email: userData.email})
             if (user) {
               res.send({
                 status: 400,
@@ -56,7 +56,7 @@ const UserController = {
             }
             else {
               const hashedPassword = await argon2.hash(userData.password)
-              const newUser = new Users({username: userData.username, email: userData.email, password: hashedPassword});
+              const newUser: any = new Users({username: userData.username, email: userData.email, password: hashedPassword});
               await newUser.save();
               res.send({
                 status: 200,

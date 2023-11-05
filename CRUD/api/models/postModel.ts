@@ -1,12 +1,11 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 
 const postSchema = new Schema({
-    id: Number,
     creatorEmail: String,
     creator: String,  
     title: String,
     content: String,
-    image: Buffer
+    imageId: Types.ObjectId
 }, {
     timestamps: true
 })

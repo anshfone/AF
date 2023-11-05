@@ -4,23 +4,38 @@ import { Request,Response } from "express";
 import Posts from '../models/postModel.ts';
 import Users from '../models/userModel.ts';
 import { Post } from '../interfaces/PostInterface.ts';
-import { bucket } from "../app.ts";
-import { Readable } from 'stream';
+import { ReadStream } from 'fs'
+import mongoose from 'mongoose'
+import { gfs, gridfsBucket } from '../database/mongoConfig.ts'
 dotenv.config();
 
 const postController = {
     async getPosts(req: Request, res: Response): Promise<void> {
         const userData = req.body
-        const posts = await Posts.find({creatorEmail: userData.creatorEmail}).sort({createdAt: -1})
-        res.json(posts)
+        const posts: any = await Posts.find({creatorEmail: userData.creatorEmail}).sort({createdAt: -1})
+        res.send({
+            status: 200,
+            message: "All Posts Fetched",
+            posts
+        })
+    },
+    async getImage(req: Request, res: Response): Promise<void> {
+        try{
+            const id = new mongoose.Types.ObjectId(req.params.imageId)
+            const image = await gfs.files.findOne({_id: id})
+            if (image.contentType === "image/jpeg" || image.contentType === 'image/png') {
+                const readStream = gridfsBucket.openDownloadStream(image._id)
+                readStream.pipe(res)
+            }
+        } catch(err) {
+            console.log(err)
+        }
     },
     async createPost(req: Request, res: Response): Promise<void> {
         try{
-            const user = await Users.findOne({email: req.body.creatorEmail})
-            console.log(req)
-            // const newPost = new Posts({creator: user.username,...req.body})
-            
-            // await newPost.save()
+            const user: any = await Users.findOne({email: req.body.creatorEmail})
+            const newPost: any = new Posts({creator: user.username,...req.body,imageId: req.file.id}) 
+            await newPost.save()
             res.send({
                 status: 200,
                 message: "Post Created"

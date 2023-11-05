@@ -13,17 +13,19 @@ const Home: React.FC<{}> = ({}) => {
   const [searchedString,setSearchedString] = useState("")
 
   useEffect(() => {
+    console.log("UseEf")
     const getPosts = async (): Promise<void> => {
       const jwtToken: string | null = getCookie('jwtToken')
       if (jwtToken) { 
         const postsResponse: AxiosResponse<any,any> = await axios.get("http://localhost:3000/api/posts/get",{ headers: { jwtToken: jwtToken}})
-        const postsData: Post[] = postsResponse.data
+        console.log(postsResponse.data)
+        const postsData: Post[] = postsResponse.data.posts
         setPosts(postsData)
         setLogined(true)
       } 
     }
     getPosts()
-  },[posts])
+  },[])
 
     return (
       <>
