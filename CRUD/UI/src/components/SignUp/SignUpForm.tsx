@@ -48,7 +48,6 @@ const SignUpForm: React.FC<{}> = ({}) => {
     }
     const userData = {username: username,email: email, password: password}
     const responseData = await axios.post('http://localhost:3000/api/users/signUp',userData)
-    console.log(responseData)
     if (responseData.data.status == 200) {
       return navigate("/login")
     }

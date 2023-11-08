@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react"
-import { NavLink, NavigateFunction, useNavigate } from "react-router-dom";
+import React, { useEffect} from "react"
+import { NavLink } from "react-router-dom";
 import { getCookie } from "../../utils/cookies";
 import { Post } from "../Post/Post";
 
@@ -11,6 +11,8 @@ type setSearchedString = React.Dispatch<React.SetStateAction<string>>
 interface NavBarProps {
     logined: boolean,
     searchedString: string,
+    currentPage: number,
+    postsPerPage: number,
     setLogined: setLogined,
     setQueryPosts: setPosts,
     setSearchedString: setSearchedString
@@ -20,9 +22,7 @@ const deleteCookie = (name: string) => {
     document.cookie = name +`=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ logined, searchedString, setLogined, setQueryPosts, setSearchedString }) => {
-
-    let navigate: NavigateFunction = useNavigate();
+const NavBar: React.FC<NavBarProps> = ({ logined, searchedString, currentPage, postsPerPage, setLogined, setQueryPosts, setSearchedString }) => {
 
     const handleLogout = (setLogined: setLogined): void => {
         setLogined(false)
@@ -33,12 +33,15 @@ const NavBar: React.FC<NavBarProps> = ({ logined, searchedString, setLogined, se
     useEffect(() => {
       const searchPosts = async (searchedString: string) => {
         const jwtToken: string | null = getCookie('jwtToken')
-        const searchData = {toBeSearched: searchedString}
-        const searchResponse = await axios.post("http://localhost:3000/api/posts/search", searchData, {headers: {jwtToken: jwtToken}})
+        const searchResponse = await axios.get("http://localhost:3000/api/posts/search", {headers: {jwtToken: jwtToken}, params: {
+          toBeSearched: searchedString,
+          skip: (currentPage-1)*postsPerPage,
+          limit: postsPerPage
+        }})
         return searchResponse.data.data
       } 
       searchPosts(searchedString).then((posts: Post[]) => setQueryPosts(posts))
-    },[searchedString])
+    },[searchedString,currentPage])
  
     return (
         <>

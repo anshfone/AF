@@ -18,12 +18,10 @@ const CreatePost: React.FC<{}> = () => {
 
   const createPost = async (): Promise<void> => {
     const formData: any = new FormData()
-    console.log(title,content,image)
     formData.append('title', title);
     formData.append('content', content);
     formData.append('file', image);
     const jwtToken: string | null = getCookie('jwtToken')
-    const postData = {title: title, content: content, image: image}
     const postCreationResponse: AxiosResponse<any,any> = await axios.post("http://localhost:3000/api/posts/create",formData,{headers: {jwtToken: jwtToken, 'Content-Type': 'multipart/form-data'}})
     if (postCreationResponse.data.status == 200) {
         toast.success(`${postCreationResponse.data.message}`,{

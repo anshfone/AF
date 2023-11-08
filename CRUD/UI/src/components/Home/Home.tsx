@@ -6,11 +6,6 @@ import { Outlet } from 'react-router-dom';
 import { getCookie } from "../../utils/cookies";
 import Pagination from "../Pagination/Pagination";
 
-
-const getPosts = async () => {
-
-}
-
 const Home: React.FC<{}> = ({}) => {
 
   const [posts,setPosts] = useState<Post[]>([])
@@ -28,7 +23,6 @@ const Home: React.FC<{}> = ({}) => {
         skip: skip, 
         limit: postsPerPage, 
       }})
-      console.log(postsResponse.data)
       const postsData: Post[] = postsResponse.data.posts
       setPosts(postsData)
       setLogined(true)
@@ -42,7 +36,8 @@ const Home: React.FC<{}> = ({}) => {
 
   return (
     <>
-      <Navbar logined={logined} searchedString={searchedString} setLogined={setLogined} setQueryPosts={setQueryPosts} setSearchedString={setSearchedString}/>
+      <Navbar logined={logined} searchedString={searchedString} currentPage={currentPage} postsPerPage = {postsPerPage} 
+        setLogined={setLogined} setQueryPosts={setQueryPosts} setSearchedString={setSearchedString}/>
       {searchedString.length && logined ? (
         <div>
           {queryPosts.map((post: Post, index: number) => (

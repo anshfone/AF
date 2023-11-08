@@ -10,9 +10,14 @@ import { faker } from '@faker-js/faker';
 import { generateMockPosts } from '../utils/generateMockData.ts';
 dotenv.config();
 
+interface SearchQuery {
+    toBeSearched: string,
+    skip: number,
+    limit: number
+}
+
 const postController = {
     async getPosts(req: Request, res: Response): Promise<void> {
-        console.log(req.query)
         const skip = parseInt(req.query.skip as string, 10); 
         const limit = parseInt(req.query.limit as string, 10); 
         const posts: any = await Posts.find({}).skip(skip).limit(limit).sort({createdAt: -1})
@@ -50,16 +55,25 @@ const postController = {
         }
     },
     async searchPosts(req: Request, res: Response): Promise<void> {
-        const {toBeSearched} = req.body
+        const { toBeSearched, skip, limit } = req.query as Record<string, string>;
+        const skipAsNumber = parseInt(skip, 10);
+        const limitAsNumber = parseInt(limit, 10);
         const escapedToBeSearched = escapeStringRegexp(toBeSearched);
         const pipeline = [
             {
                 $match: {
                     $or: [
                         { title: { $regex: escapedToBeSearched, $options: 'i' } },
-                        { content: { $regex: escapedToBeSearched, $options: 'i' } }
+                        { content: { $regex: escapedToBeSearched, $options: 'i' } },
+                        { creator: { $regex: escapedToBeSearched, $options: 'i'} }
                     ]
                 }
+            },
+            {
+                $skip: skipAsNumber
+            },
+            {
+                $limit: limitAsNumber
             },
             {
                 $project: {

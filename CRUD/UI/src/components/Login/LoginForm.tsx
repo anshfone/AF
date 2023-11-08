@@ -25,7 +25,6 @@ const LoginForm: React.FC<{}> = ({}) => {
     
     try {
       const responseData: AxiosResponse<any,any> = await axios.post('http://localhost:3000/api/users/login', userData);
-      console.log(responseData);
 
       if (responseData.data.status === 200) {
         const token: string = responseData.data.token;
