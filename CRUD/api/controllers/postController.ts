@@ -4,19 +4,24 @@ import { Request,Response } from "express";
 import Posts from '../models/postModel.ts';
 import Users from '../models/userModel.ts';
 import { Post } from '../interfaces/PostInterface.ts';
-import { ReadStream } from 'fs'
 import mongoose from 'mongoose'
 import { gfs, gridfsBucket } from '../database/mongoConfig.ts'
+import { faker } from '@faker-js/faker';
+import { generateMockPosts } from '../utils/generateMockData.ts';
 dotenv.config();
 
 const postController = {
     async getPosts(req: Request, res: Response): Promise<void> {
-        const userData = req.body
-        const posts: any = await Posts.find({creatorEmail: userData.creatorEmail}).sort({createdAt: -1})
+        console.log(req.query)
+        const skip = parseInt(req.query.skip as string, 10); 
+        const limit = parseInt(req.query.limit as string, 10); 
+        const posts: any = await Posts.find({}).skip(skip).limit(limit).sort({createdAt: -1})
+        const totalPostsCount = await Posts.countDocuments({})
         res.send({
             status: 200,
             message: "All Posts Fetched",
-            posts
+            posts,
+            totalPosts: totalPostsCount
         })
     },
     async getImage(req: Request, res: Response): Promise<void> {
@@ -71,6 +76,14 @@ const postController = {
             status: 200,
             data: searchedPosts
         })
+    },
+    async generateMockData(req: Request, res: Response): Promise<void> {
+        const count: number = +req.query.count
+        for (let i = 0; i < count; i++) {
+            const post: any = new Posts(generateMockPosts());
+            await post.save();
+        }
+        res.send(`Created ${count} posts`)
     },
     async deletePost(req: Request, res: Response): Promise<void> {
         await Posts.deleteMany({})

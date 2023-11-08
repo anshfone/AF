@@ -19,6 +19,7 @@ async function main(): Promise<any> {
     app.use(methodOverride('_method'))
     app.use('/api/users', userRouter);
     app.use('/api/posts/',postRouter)
+    // app.group('/api/posts',postRouter,auth)
   } catch (error) {
     console.log(error);
   }

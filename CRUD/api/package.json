@@ -4,9 +4,11 @@
   "type": "module",
   "main": "app.ts",
   "scripts": {
-    "dev": "nodemon ./app.ts"
+    "dev": "nodemon -e ts -w ./src -x yarn run watch:serve",
+    "watch:serve": "node --loader ts-node/esm app.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.2.0",
     "argon2": "^0.31.1",
     "aws-sdk": "^2.1486.0",
     "child_process": "^1.0.2",
