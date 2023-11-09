@@ -1,0 +1,15 @@
+version: '3'
+services:
+  backend:
+    image: foneace:backend
+    container_name: foneaceb
+    working_dir: /dock
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    volumes:
+      - .:/dock
+    command: yarn dev
+    ports:
+      - "3000:3000"
