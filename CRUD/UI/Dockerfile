@@ -1,7 +1,7 @@
-FROM node:lts-alpine
-WORKDIR /usr/src/app
-COPY ["package.json", "yarn.lock"]
+FROM node:alpine
+WORKDIR /dock
+COPY package.json .
 RUN yarn
 COPY . .
-EXPOSE 5137
-CMD ["yarn", "dev"]
+EXPOSE 5173
+CMD ["yarn", "dev", "--debug"]
