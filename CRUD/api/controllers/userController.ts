@@ -10,11 +10,12 @@ const UserController = {
     async loginUser(req: Request, res: Response): Promise<void> {
       const userData = req.body
         const user: any = await Users.findOne({email: userData.email})
+        console.log(user)
         if (user) {
           const passwordVerified = await argon2.verify(user.password,userData.password)
           if (passwordVerified) {
             const jwtSecretKey: string = process.env.JWT_SECRET_KEY;
-            const token = jwt.sign(userData, jwtSecretKey);
+            const token = jwt.sign(user.toJSON(), jwtSecretKey);
             res.send({
               status: 200,
               message: "Login Successfull",

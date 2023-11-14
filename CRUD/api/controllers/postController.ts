@@ -8,6 +8,8 @@ import mongoose from 'mongoose'
 import { gfs, gridfsBucket } from '../database/mongoConfig.ts'
 import { faker } from '@faker-js/faker';
 import { generateMockPosts } from '../utils/generateMockData.ts';
+import kafka from '../kafka/kafka.ts';
+import { Partitioners } from 'kafkajs';
 dotenv.config();
 
 interface SearchQuery {
@@ -43,9 +45,15 @@ const postController = {
     },
     async createPost(req: Request, res: Response): Promise<void> {
         try{
-            const user: any = await Users.findOne({email: req.body.creatorEmail})
-            const newPost: any = new Posts({creator: user.username,...req.body,imageId: req.file?.id}) 
-            await newPost.save()
+            const producer = kafka.producer({ createPartitioner: Partitioners.DefaultPartitioner })
+            await producer.connect()
+            await producer.send({
+                topic: "postCreation",
+                messages: [
+                    { value: JSON.stringify(req.body) }
+                ]
+            })
+            await producer.disconnect()
             res.send({
                 status: 200,
                 message: "Post Created"
