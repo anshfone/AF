@@ -1,6 +1,6 @@
 import { Kafka, KafkaConfig} from "kafkajs"
-import Users from "../models/userModel"
-import Posts from "../models/postModel"
+import Users from "../models/userModel.ts"
+import Posts from "../models/postModel.ts"
 
 const kafkaConfig: KafkaConfig = {
     clientId: "FoneAce",
@@ -15,14 +15,9 @@ await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
         const postData = JSON.parse(message.value.toString())
         console.log(postData)
-        // const user: any = await Users.findOne({email: req.body.creatorEmail})
-        // const newPost: any = new Posts({creator: user.username,...req.body,imageId: req.file?.id}) 
-        // await newPost.save()
-        // console.log({
-        //     value: message.value.toString(),
-        //     topic: topic,
-        //     partition: partition
-        // })
+        const user: any = await Users.findOne({email: postData.creatorEmail})
+        const newPost: any = new Posts({creator: user.username,...postData,imageId: postData.file?.id}) 
+        await newPost.save()
     }
 })
 

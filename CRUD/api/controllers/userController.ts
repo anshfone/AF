@@ -10,7 +10,6 @@ const UserController = {
     async loginUser(req: Request, res: Response): Promise<void> {
       const userData = req.body
         const user: any = await Users.findOne({email: userData.email})
-        console.log(user)
         if (user) {
           const passwordVerified = await argon2.verify(user.password,userData.password)
           if (passwordVerified) {
