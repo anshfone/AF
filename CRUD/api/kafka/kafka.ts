@@ -2,6 +2,8 @@ import { Kafka, KafkaConfig} from "kafkajs"
 import Users from "../models/userModel.ts"
 import Posts from "../models/postModel.ts"
 
+// Download spotify/kafka image & run sudo docker run -p 2181:2181 -p 9092:9092 --name kafka-docker-container3 --env ADVERTISED_HOST=127.0.0.1 --env ADVERTISED_PORT=9092 spotify/kafka
+
 const kafkaConfig: KafkaConfig = {
     clientId: "FoneAce",
     brokers: ["localhost:9092"]
