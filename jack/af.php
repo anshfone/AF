@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// $client = new MongoDB\Client('mongodb://mongodb-deployment:27017');
+$client = new MongoDB\Client('mongodb://mongodb-deployment:27017');
 
 // Initialize game variables
 $choices = ['rock', 'paper', 'scissors'];
